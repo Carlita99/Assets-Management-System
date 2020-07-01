@@ -48,7 +48,8 @@
             <div class="wrap-login100">
                 <form class="login100-form validate-form" asp-controller="Auth" asp-action="Login">
                     <span class="container-login100-form-btn">
-                        @ViewBag.Error
+                        @ViewData["Error"]
+
                     </span>
 
                     <span class="login100-form-title p-b-43">

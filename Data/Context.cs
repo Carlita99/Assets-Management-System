@@ -11,19 +11,19 @@ using Contract = AssetManagement.Models.Contract;
 
 namespace AssetManagement.Data
 {
-    public class Context: IdentityDbContext <Company,IdentityRole<int>,int>
+    public class Context : IdentityDbContext<Company, IdentityRole<int>, int>
     {
         public Context(DbContextOptions<Context> options) : base(options) { }
 
-        DbSet<Asset> Assets { get; set; }
-        DbSet<AssetType> AssetTypes { get; set; }
-        DbSet<Branch> Branches { get; set; }
+        public DbSet<Asset> Assets { get; set; }
+        public DbSet<AssetType> AssetTypes { get; set; }
+        public DbSet<Branch> Branches { get; set; }
         //DbSet<Company> Companies { get; set; }
-        DbSet<CompanyType> CompanyTypes { get; set; }
-        DbSet<Contract> Contracts { get; set; }
-        DbSet<ContractType> ContractTypes { get; set; }
-        DbSet<Staff> Staff { get; set; }
-      
+        public DbSet<CompanyType> CompanyTypes { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<ContractType> ContractTypes { get; set; }
+        public DbSet<Staff> Staff { get; set; }
+
 
     }
 }

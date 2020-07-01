@@ -2,32 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AssetManagement.Data;
 using AssetManagement.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetManagement.Controllers
 {
     public class AuthController : Controller
     {
-        private UserManager<Company> _userManager;
-        private SignInManager<Company> _signInManager;
-
-        public AuthController(UserManager<Company> userManager, SignInManager<Company> signInManager)
+        private readonly UserManager<Company> _userManager;
+        private readonly SignInManager<Company> _signInManager;
+        private readonly Context _context;
+        public AuthController(UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
-        public async Task<IActionResult> Register(string email, string password, string name)
+        public async Task<IActionResult> Register(string email, string password, string confirmPassword, string name)
         {
             try
             {
                 if (email == null || password == null)
-                    throw new Exception();
+                    throw new Exception("");
+                if (password != confirmPassword)
+                    throw new Exception("Passwords don't match");
 
                 Company company = await _userManager.FindByEmailAsync(email);
                 if (company != null)
-                    throw new Exception();
+                    throw new Exception("This email is taken by another company");
+
                 company = new Company();
                 company.Name = name;
                 company.UserName = email;
@@ -36,12 +42,14 @@ namespace AssetManagement.Controllers
                 if (result.Succeeded)
                     return RedirectToAction("Login", "Auth", new { email = email, password = password });
                 else
-                    throw new Exception();
+                    throw new Exception("Oops! An error occured. Please try again");
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error login");
-                ViewBag.Error = "This email is taken by another company";
+                ICollection<CompanyType> companyTypes = await _context.CompanyTypes.ToListAsync();
+                ViewData["companyTypes"] = companyTypes;
+
+                ViewData["Error"] = e.Message;
                 return View();
             }
 
@@ -60,9 +68,16 @@ namespace AssetManagement.Controllers
             }
             else
             {
-                ViewBag.Error = "Bad Credentials";
+                ViewData["Error"] = "Bad Credentials";
                 return View();
             }
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
     }
 }
