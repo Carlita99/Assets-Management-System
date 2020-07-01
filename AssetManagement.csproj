@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200629065946_IntialCreate.cs" />
+    <Compile Remove="Migrations\20200629065946_IntialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200630060637_Added-Auth.cs" />
+    <Compile Remove="Migrations\20200630060637_Added-Auth.Designer.cs" />
+    <Compile Remove="Migrations\20200630084453_Removie-Useless-CompanyRole.cs" />
+    <Compile Remove="Migrations\20200630084453_Removie-Useless-CompanyRole.Designer.cs" />
+    <Compile Remove="Migrations\20200630135558_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200630135558_InitialMigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
