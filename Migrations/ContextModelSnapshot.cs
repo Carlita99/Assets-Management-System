@@ -38,7 +38,7 @@ namespace AssetManagement.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DisposedDate")
+                    b.Property<DateTime?>("DisposedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
@@ -263,6 +263,9 @@ namespace AssetManagement.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FireDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");

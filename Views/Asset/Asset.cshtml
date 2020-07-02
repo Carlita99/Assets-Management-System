@@ -8,6 +8,9 @@
     Asset asset = (Asset)ViewData["asset"];
     string error = (string)ViewData["Error"];
 }
-@if (asset!=null)
+@if (asset != null)
 {
-    <h1>@asset.Company.Id</h1>}
+    <h1>@asset.Company.Id</h1>
+    <h1>@asset.Model</h1>
+
+}

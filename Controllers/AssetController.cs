@@ -25,6 +25,7 @@ namespace AssetManagement.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+
         public async Task<IActionResult> Index()
         {
             Company company = await _userManager.GetUserAsync(HttpContext.User);
@@ -93,7 +94,8 @@ namespace AssetManagement.Controllers
                 Price = price,
                 Branch = companyBranch,
                 Staff = responsible,
-                Type = assetType
+                Type = assetType,
+                Company=company
             };
             await _context.Assets.AddAsync(asset);
             var changed = await _context.SaveChangesAsync();

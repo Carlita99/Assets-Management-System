@@ -3,13 +3,19 @@
 *@
 @{
 }
-@{ 
+@{
 
     Company company = (Company)ViewData["company"];
 }
 <h1>HEllo</h1>
 @company.Name
-@foreach(Asset x in company.Assets)
+@foreach (Asset x in company.Assets)
 {
-    <h1>@x.Type.Type</h1>
+    <h1>
+        @x.Type.Type
+    </h1>
+
 }
+<h1>@company.Id</h1>
+<h1>@company.Name</h1>
+
