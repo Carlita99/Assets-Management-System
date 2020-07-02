@@ -82,7 +82,7 @@ namespace AssetManagement
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Asset}/{action=Index}/{id?}");
             });
         }
     }
