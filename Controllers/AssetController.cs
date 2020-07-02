@@ -93,7 +93,8 @@ namespace AssetManagement.Controllers
                 Price = price,
                 Branch = companyBranch,
                 Staff = responsible,
-                Type = assetType
+                Type = assetType,
+                Company = company
             };
             await _context.Assets.AddAsync(asset);
             var changed = await _context.SaveChangesAsync();

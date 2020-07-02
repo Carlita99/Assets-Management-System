@@ -21,6 +21,6 @@ namespace AssetManagement.Models
         public Staff Staff { get; set; }
         public Company Company { get; set; }
 
-        public Branch? Branch { get; set; }
+        public Branch Branch { get; set; }
     }
 }

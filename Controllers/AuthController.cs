@@ -64,7 +64,7 @@ namespace AssetManagement.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                 return RedirectToAction("Index", "Asset");
             }
             else
             {
