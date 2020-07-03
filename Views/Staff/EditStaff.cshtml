@@ -45,7 +45,7 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="nav-item active ">
+                    <li class="nav-item  ">
                         <a class="nav-link" href='@Url.Action("Index", "Asset")'>
                             <i class="material-icons">content_paste</i>
                             <p>Assets</p>
@@ -57,7 +57,7 @@ The above copyright notice and this permission notice shall be included in all c
                             <p>Profile</p>
                         </a>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item active">
                         <a class="nav-link" href='@Url.Action("Index", "Staff")'>
                             <i class="material-icons">library_books</i>
                             <p>Staff</p>
@@ -71,12 +71,15 @@ The above copyright notice and this permission notice shall be included in all c
                 </ul>
             </div>
         </div>
+        @{
+            Staff s = (Staff)ViewData["staff"];
+        }
         <div class="main-panel">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">My Assets</a>
+                        <a class="navbar-brand" href="javascript:;">Staff</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>
@@ -97,8 +100,6 @@ The above copyright notice and this permission notice shall be included in all c
                     </div>
                 </div>
             </nav>
-
-            @ViewData["error"];
             <!-- End Navbar -->
             <div class="content">
                 <div class="container-fluid">
@@ -106,91 +107,67 @@ The above copyright notice and this permission notice shall be included in all c
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-info">
-                                    <h4 class="card-title">Add a New Asset</h4>
-                                    <p class="card-category">Complete the form</p>
+                                    <h4 class="card-title">Edit your staff</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form asp-controller="Asset" asp-action="AddAsset">
+                                    <form asp-controller="Staff" asp-action="EditStaff">
                                         <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group" data-validate="Name is required">
-                                                    <label class="bmd-label-floating">Name</label>
-                                                    <input type="text" class="form-control" name="model">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Type is required">
-                                                    <label class="bmd-label-floating">Type</label>
-                                                    <select name="type" id="type" class="form-control">
-                                                        <option value=null> </option>
-                                                        @{
-                                                            ICollection<AssetType> at = (ICollection<AssetType>)ViewData["assetTypes"];
-                                                        }
-                                                        @foreach (AssetType std in at)
-                                                        {
-                                                            <option value=@std.Id> @std.Type</option>
-                                                        }
-                                                    </select>
+                                            <div class="col-md-4">
+                                                <div class="form-group" data-validate="firstName is required">
+                                                    <label class="bmd-label-floating">First Name</label>
+                                                    <input type="text" class="form-control" name="firstName" value="@s.FirstName">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" data-validate="Price is required">
-                                                    <label class="bmd-label-floating">Price</label>
-                                                    <input type="number" class="form-control" name="price">
+                                                <div class="form-group" data-validate="lastName is required">
+                                                    <label class="bmd-label-floating">Last Name</label>
+                                                    <input type="text" name="lastName" class="form-control" value="@s.LastName" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group" data-validate="Gender is required">
+                                                    <label class="bmd-label-floating">Gender</label>
+                                                    <input type="text" class="form-control" name="gender" value="@s.Gender">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group" data-validate="Description is required">
-                                                    <label class="bmd-label-floating">Description</label>
-                                                    <input type="text" class="form-control" name="description">
+                                            <div class="col-md-4">
+                                                <div class="form-group" data-validate="Email is required">
+                                                    <label class="bmd-label-floating">Email</label>
+                                                    <input type="text" class="form-control" name="email" value="@s.Email">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" data-validate="Date is required">
-                                                    <label class="bmd-label-floating">Date Aquired</label>
-                                                    <input type="date" class="form-control" name="aquired">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Staff is required">
-                                                    <label class="bmd-label-floating">Staff</label>
-                                                    <select name="staff" id="staff" class="form-control">
-                                                        <option value=null> </option>
-                                                        @{
-                                                            ICollection<Staff> st = (ICollection<Staff>)ViewData["staffList"];
-                                                        }
-                                                        @foreach (Staff std in st)
-                                                        {
-                                                            <option value=@std.Id> @std.FirstName  @std.LastName</option>
-                                                        }
-                                                    </select>
+                                                <div class="form-group" data-validate="Address is required">
+                                                    <label class="bmd-label-floating">Address</label>
+                                                    <input type="text" class="form-control" name="address" value="@s.Address">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group" data-validate="Branch is required">
                                                     <label class="bmd-label-floating">Branch</label>
-                                                    <select name="branch" id="branch" class="form-control">
+                                                    <select name="branchId" class="form-control">
                                                         <option value=null> </option>
                                                         @{
-                                                            ICollection<Branch> br = (ICollection<Branch>)ViewData["companyBranches"];
+                                                            ICollection<Branch> br = (ICollection<Branch>)ViewData["branches"];
                                                         }
                                                         @foreach (Branch std in br)
                                                         {
-                                                            <option value=@std.Id> @std.Address</option>
+                                                            if (@std.Id == @s.Branch.Id)
+                                                            {
+                                                                <option value=@std.Id selected> @std.Address</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value=@std.Id> @std.Address</option>
+                                                            }
                                                         }
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group" data-validate="Rented is required">
-                                                    <label class="bmd-label-floating">Rented  </label>
-                                                    <input type="checkbox" name="rented" value=True>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <button type="submit" class="btn btn-info pull-right">Add Asset</button>
+                                        <button type="submit" class="btn btn-info pull-right">Edit Staff</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
@@ -236,7 +213,7 @@ The above copyright notice and this permission notice shall be included in all c
             </footer>
         </div>
     </div>
-    
+
     <!--   Core JS Files   -->
     <script src="~/assets/js/core/jquery.min.js"></script>
     <script src="~/assets/js/core/popper.min.js"></script>
