@@ -21,7 +21,7 @@ namespace AssetManagement.Controllers
             _signInManager = signInManager;
             _context = context;
         }
-        public async Task<IActionResult> Register(string email, string password, string confirmPassword, string name)
+        public async Task<IActionResult> Register(string email, string password, string confirmPassword, string name,int CompanyType)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace AssetManagement.Controllers
                     throw new Exception("");
                 if (password != confirmPassword)
                     throw new Exception("Passwords don't match");
-
+                CompanyType companyType = await _context.CompanyTypes.FirstOrDefaultAsync(t => t.Id == CompanyType);
                 Company company = await _userManager.FindByEmailAsync(email);
                 if (company != null)
                     throw new Exception("This email is taken by another company");
@@ -38,6 +38,7 @@ namespace AssetManagement.Controllers
                 company.Name = name;
                 company.UserName = email;
                 company.Email = email;
+                company.Type = companyType;
                 IdentityResult result = await _userManager.CreateAsync(company, password);
                 if (result.Succeeded)
                     return RedirectToAction("Login", "Auth", new { email = email, password = password });
