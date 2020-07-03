@@ -41,17 +41,6 @@
             </div>
         </nav>
     </header>
-    @{
-        ICollection<CompanyType> companyTypes = (ICollection<CompanyType>)ViewData["companyTypes"];
-    }
-    @foreach (var x in companyTypes)
-    {
-        <h2>@x.Type</h2>
-        <h2>@x.Id</h2>
-        <h2>@x.Description</h2>
-
-
-    }
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
@@ -76,12 +65,27 @@
                         <span class="label-input100">Email</span>
                     </div>
 
-
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="password" required pattern= "(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\?!#\$%\^&\*]).{8,}">
+                        <input class="input100" type="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\?!#\$%\^&\*]).{8,}">
                         <span class="focus-input100"></span>
                         <span class="label-input100">Password</span>
                     </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="confirmPassword is required">
+                        <input class="input100" type="password" name="confirmPassword" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\?!#\$%\^&\*]).{8,}">
+                        <span class="focus-input100"></span>
+                        <span class="label-input100">Confirm Password</span>
+                    </div>
+
+                    <select name="CompanyTypes" class="form-control">
+                        @{
+                            ICollection<CompanyType> ct = (ICollection<CompanyType>)ViewData["companyTypes"];
+                        }
+                        @foreach (CompanyType std in ct)
+                        {
+                            <option value=@std.Id> @std.Type</option>
+                        }
+                    </select><br />
 
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" type="submit">

@@ -74,6 +74,9 @@ namespace AssetManagement.Controllers
             int companyId = int.Parse(await _userManager.GetUserIdAsync(company));
             if (String.IsNullOrEmpty(firstName) || String.IsNullOrEmpty(lastName) || String.IsNullOrEmpty(gender) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(address))
             {
+                Staff s = await _context.Staff.FirstOrDefaultAsync((s) => s.Id == id);
+                ViewData["staff"] = s;
+
                 ViewData["error"] = "All fields are required";
                 ICollection<Branch> branches = await _context.Branches.Where(b => b.Company.Id == companyId).ToListAsync();
                 ViewData["branches"] = branches;
