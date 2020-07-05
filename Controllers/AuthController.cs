@@ -80,5 +80,12 @@ namespace AssetManagement.Controllers
             return RedirectToAction("Login");
         }
 
+        public async Task<IActionResult> CompanyProfile() {
+            Company company = await _userManager.GetUserAsync(HttpContext.User);
+            int id = int.Parse(await _userManager.GetUserIdAsync(company));
+            company = await _context.Users.Include(c => c.Branches).FirstOrDefaultAsync(c => c.Id == id);
+            ViewData["company"] = company;
+            return View();
+        }
     }
 }
