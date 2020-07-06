@@ -18,7 +18,7 @@ The above copyright notice and this permission notice shall be included in all c
     <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Company Name
+        Ifinance
     </title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
@@ -40,7 +40,7 @@ The above copyright notice and this permission notice shall be included in all c
         -->
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-                    Creative Tim
+                    Ifinance
                 </a>
             </div>
             <div class="sidebar-wrapper">
@@ -52,7 +52,7 @@ The above copyright notice and this permission notice shall be included in all c
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="./user.html">
+                        <a class="nav-link" href='@Url.Action("CompanyProfile", "Auth")'>
                             <i class="material-icons">person</i>
                             <p>Profile</p>
                         </a>
@@ -74,200 +74,169 @@ The above copyright notice and this permission notice shall be included in all c
         @{
             Asset a = (Asset)ViewData["asset"];
         }
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">My Assets</a>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end">
-                        <a href="@Url.Action("DisposeAsset","Asset", new { Id = @a.Id })">
-                            <input type="button" value="Dispose Asset" style="margin:30px;" />
-                        </a>
-                        <form class="navbar-form">
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                    <div class="ripple-container"></div>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <a class="navbar-brand" href="javascript:;">My Assets</a>
                 </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-info">
-                                    <h4 class="card-title">Edit your asset</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form asp-controller="Asset" asp-action="EditAsset">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group" data-validate="Name is required">
-                                                    <label class="bmd-label-floating">Name</label>
-                                                    <input type="text" class="form-control" name="model" value="@a.Model">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Type is required">
-                                                    <label class="bmd-label-floating">Type</label>
-                                                    <select name="type" id="type" class="form-control">
-                                                        <option value=null> </option>
-                                                        @{
-                                                            ICollection<AssetType> at = (ICollection<AssetType>)ViewData["assetTypes"];
-                                                        }
-                                                        @foreach (AssetType std in at)
-                                                        {
-                                                            if (a.Type.Type.Equals(std.Type))
-                                                            {
-                                                                <option value=@std.Id selected> @std.Type</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value=@std.Id> @std.Type</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group" data-validate="Price is required">
-                                                    <label class="bmd-label-floating">Price</label>
-                                                    <input type="number" class="form-control" name="price" value="@a.Price">
-                                                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <a href="@Url.Action("DisposeAsset","Asset", new { Id = @a.Id })">
+                        <input type="button" value="Dispose Asset" style="margin:30px;" />
+                    </a>
+                    <form class="navbar-form">
+                        <div class="input-group no-border">
+                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <script>
+            if (@ViewData["error"] != '')
+                alert(@ViewData["error"])
+        </script>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-info">
+                                <h4 class="card-title">Edit your asset</h4>
+                            </div>
+                            <div class="card-body">
+                                <form asp-controller="Asset" asp-action="EditAsset">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group" data-validate="Name is required">
+                                                <label class="bmd-label-floating">Name</label>
+                                                <input type="text" class="form-control" name="model" value="@a.Model">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group" data-validate="Description is required">
-                                                    <label class="bmd-label-floating">Description</label>
-                                                    <input type="text" class="form-control" name="description" value="@a.Description">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group" data-validate="Date is required">
-                                                    <label class="bmd-label-floating">Date Aquired</label>
-                                                    <input type="text" class="form-control" name="aquired" value="@a.AquiredDate" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Staff is required">
-                                                    <label class="bmd-label-floating">Staff</label>
-                                                    <select name="staff" id="staff" class="form-control">
-                                                        <option value=null> </option>
-                                                        @{
-                                                            ICollection<Staff> st = (ICollection<Staff>)ViewData["staffList"];
-                                                        }
-                                                        @foreach (Staff std in st)
-                                                        {
-                                                            if (a.Staff.FirstName.Equals(std.FirstName) && a.Staff.LastName.Equals(std.LastName))
-                                                            {
-                                                                <option value=@std.Id selected> @std.FirstName  @std.LastName</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value=@std.Id> @std.FirstName  @std.LastName</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Branch is required">
-                                                    <label class="bmd-label-floating">Branch</label>
-                                                    <select name="branch" id="branch" class="form-control">
-                                                        <option value=null> </option>
-                                                        @{
-                                                            ICollection<Branch> br = (ICollection<Branch>)ViewData["companyBranches"];
-                                                        }
-                                                        @foreach (Branch std in br)
-                                                        {
-                                                            if (a.Branch.Id == std.Id)
-                                                            {
-                                                                <option value=@std.Id selected> @std.Address</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value=@std.Id> @std.Address</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group" data-validate="Rented is required">
-                                                    <label class="bmd-label-floating">Rented  </label>
+                                        <div class="col-md-3">
+                                            <div class="form-group" data-validate="Type is required">
+                                                <label class="bmd-label-floating">Type</label>
+                                                <select name="type" id="type" class="form-control">
+                                                    <option value=null> </option>
                                                     @{
-                                                        if (a.Rented)
+                                                        ICollection<AssetType> at = (ICollection<AssetType>)ViewData["assetTypes"];
+                                                    }
+                                                    @foreach (AssetType std in at)
+                                                    {
+                                                        if (a.Type.Type.Equals(std.Type))
                                                         {
-                                                            <input type="checkbox" name="rented" value=True checked>
+                                                            <option value=@std.Id selected> @std.Type</option>
                                                         }
                                                         else
                                                         {
-                                                            <input type="checkbox" name="rented" value=True>
+                                                            <option value=@std.Id> @std.Type</option>
                                                         }
                                                     }
-                                                </div>
+                                                </select>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-info pull-right">Update your Asset</button>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-validate="Price is required">
+                                                <label class="bmd-label-floating">Price</label>
+                                                <input type="number" class="form-control" name="price" value="@a.Price">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" data-validate="Description is required">
+                                                <label class="bmd-label-floating">Description</label>
+                                                <input type="text" class="form-control" name="description" value="@a.Description">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-validate="Date is required">
+                                                <label class="bmd-label-floating">Date Aquired</label>
+                                                <input type="text" class="form-control" name="aquired" value="@a.AquiredDate" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" data-validate="Staff is required">
+                                                <label class="bmd-label-floating">Staff</label>
+                                                <select name="staff" id="staff" class="form-control">
+                                                    <option value=null> </option>
+                                                    @{
+                                                        ICollection<Staff> st = (ICollection<Staff>)ViewData["staffList"];
+                                                    }
+                                                    @foreach (Staff std in st)
+                                                    {
+                                                        if (a.Staff.FirstName.Equals(std.FirstName) && a.Staff.LastName.Equals(std.LastName))
+                                                        {
+                                                            <option value=@std.Id selected> @std.FirstName  @std.LastName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value=@std.Id> @std.FirstName  @std.LastName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" data-validate="Branch is required">
+                                                <label class="bmd-label-floating">Branch</label>
+                                                <select name="branch" id="branch" class="form-control">
+                                                    <option value=null> </option>
+                                                    @{
+                                                        ICollection<Branch> br = (ICollection<Branch>)ViewData["companyBranches"];
+                                                    }
+                                                    @foreach (Branch std in br)
+                                                    {
+                                                        if (a.Branch.Id == std.Id)
+                                                        {
+                                                            <option value=@std.Id selected> @std.Address</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value=@std.Id> @std.Address</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" data-validate="Rented is required">
+                                                <label class="bmd-label-floating">Rented  </label>
+                                                @{
+                                                    if (a.Rented)
+                                                    {
+                                                        <input type="checkbox" name="rented" value=True checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="rented" value=True>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-info pull-right">Update your Asset</button>
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav class="float-left">
-                        <ul>
-                            <li>
-                                <a href="https://www.creative-tim.com">
-                                    Creative Tim
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://creative-tim.com/presentation">
-                                    About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://blog.creative-tim.com">
-                                    Blog
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.creative-tim.com/license">
-                                    Licenses
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="copyright float-right">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>, made with <i class="material-icons">favorite</i> by
-                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-                    </div>
-                </div>
-            </footer>
         </div>
+    </div>
     </div>
 
     <!--   Core JS Files   -->

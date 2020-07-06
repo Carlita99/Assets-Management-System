@@ -38,7 +38,7 @@ namespace AssetManagement.Controllers
             var changed = await _context.SaveChangesAsync();
             if (changed > 0)
             {
-                return RedirectToAction("Index","Asset");
+                return RedirectToAction("CompanyProfile", "Auth");
             }
             ViewData["Error"] = "Oops, an error occured. Please Try Again.";
             return View();
@@ -56,7 +56,7 @@ namespace AssetManagement.Controllers
             if (String.IsNullOrEmpty(address) || String.IsNullOrEmpty(phone))
             {
                 ViewData["Error"] = "All fields are required";
-
+                ViewData["branch"] = branch;
                 return View();
             }
 
@@ -65,7 +65,7 @@ namespace AssetManagement.Controllers
             var changed = await _context.SaveChangesAsync();
             if (changed > 0)
             {
-                return RedirectToAction("Index", "Asset");
+                return RedirectToAction("CompanyProfile", "Auth");
             }
             ViewData["Error"] = "Oops, an error occured. Please Try Again.";
             return View();

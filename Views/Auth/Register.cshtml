@@ -44,10 +44,11 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
+                <script>
+                    if (@ViewData["error"] != '')
+                        alert(@ViewData["error"])
+                </script>
                 <form class="login100-form validate-form" asp-controller="Auth" asp-action="Register">
-                    <span class="container-login100-form-btn">
-                        @ViewData["Error"]
-                    </span>
 
                     <span class="login100-form-title p-b-43">
                         Create an Account

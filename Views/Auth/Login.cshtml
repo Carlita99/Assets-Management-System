@@ -46,11 +46,11 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
+                <script>
+                    if (@ViewData["error"] != '')
+                        alert(@ViewData["error"])
+                </script>
                 <form class="login100-form validate-form" asp-controller="Auth" asp-action="Login">
-                    <span class="container-login100-form-btn">
-                        @ViewData["Error"]
-
-                    </span>
 
                     <span class="login100-form-title p-b-43">
                         Login to continue
@@ -69,7 +69,7 @@
                         <span class="label-input100">Password</span>
                     </div>
 
-                    <div class="flex-sb-m w-full p-t-3 p-b-32">
+                    @*<div class="flex-sb-m w-full p-t-3 p-b-32">
                         <div class="contact100-form-checkbox">
                             <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
                             <label class="label-checkbox100" for="ckb1">
@@ -82,7 +82,7 @@
                                 Forgot Password?
                             </a>
                         </div>
-                    </div>
+                    </div>*@
 
 
                     <div class="container-login100-form-btn">
