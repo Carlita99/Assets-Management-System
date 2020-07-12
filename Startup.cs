@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetManagement.Data;
 using AssetManagement.Models;
+using AssetManagement.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,6 +55,9 @@ namespace AssetManagement
                 opts.LoginPath = "/Auth/Login";
                 opts.ExpireTimeSpan = TimeSpan.FromHours(4);
             });
+            services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<IBranchService, BranchService>();
+            services.AddScoped<IStaffService, StaffService>();
 
 
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetManagement.Data;
 using AssetManagement.Models;
+using AssetManagement.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,17 @@ namespace AssetManagement.Controllers
         private readonly UserManager<Company> _userManager;
         private readonly SignInManager<Company> _signInManager;
         private readonly Context _context;
-        public StaffController(UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
+        private readonly IBranchService _branchService;
+        private readonly IStaffService _staffService;
+
+        public StaffController(IStaffService staffService, IBranchService branchService, UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _branchService = branchService;
+            _staffService = staffService;
+
         }
         public async Task<IActionResult> Index()
         {
@@ -49,17 +56,8 @@ namespace AssetManagement.Controllers
                 ViewData["branches"] = branches;
                 return View();
             }
-            Branch branch = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branchId);
-            Staff staff = new Staff();
-            staff.Branch = branch;
-            staff.FirstName = firstName;
-            staff.LastName = lastName;
-            staff.Email = email;
-            staff.Gender = gender;
-            staff.Address = address;
-
-            await _context.AddAsync(staff);
-            var result = await _context.SaveChangesAsync();
+            Branch branch = await _branchService.GetBranchById(branchId);
+            var result = await _staffService.AddStaff(firstName, lastName, gender, email, address, branch);
             if (result < 0)
             {
                 ViewData["error"] = "Oops! An error occured. Please try again.";
@@ -83,22 +81,14 @@ namespace AssetManagement.Controllers
                 return View();
             }
 
-            Staff staff = await _context.Staff.FirstOrDefaultAsync((s) => s.Id == id && s.Branch.Company.Id == companyId);
+            Staff staff = await _staffService.GetStaffById(id, company);
             if (staff == null)
             {
                 ViewData["Error"] = "You don't have access to this content";
                 return View();
             }
-            Branch branch = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branchId);
-            staff.Branch = branch;
-            staff.FirstName = firstName;
-            staff.LastName = lastName;
-            staff.Email = email;
-            staff.Gender = gender;
-            staff.Address = address;
-            
-
-            var result = await _context.SaveChangesAsync();
+            Branch branch = await _branchService.GetBranchById(branchId);
+            var result = await _staffService.EditStaff(firstName, lastName, gender, email, address, branch, staff);
             if (result < 0)
             {
                 ViewData["error"] = "Oops! An error occured. Please try again.";

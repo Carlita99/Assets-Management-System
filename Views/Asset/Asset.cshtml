@@ -85,9 +85,9 @@ The above copyright notice and this permission notice shall be included in all c
                         <span class="navbar-toggler-icon icon-bar"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end">
-                        <form class="navbar-form">
+                        <form asp-action="Index" asp-controller="Asset">
                             <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
+                                <input type="text" value="" name="name" class="form-control" placeholder="Search...">
                                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                                     <i class="material-icons">search</i>
                                     <div class="ripple-container"></div>
@@ -178,99 +178,113 @@ The above copyright notice and this permission notice shall be included in all c
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-info">
-                                    <h4 class="card-title">Branch </h4>
+                        @if (a.Branch != null)
+                        {
+
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header card-header-info">
+                                        <h4 class="card-title">Branch </h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group" data-validate="Adress is required">
+                                                        <label class="bmd-label-floating">Adress</label>
+                                                        <input type="text" class="form-control" name="address" value="@a.Branch.Address" disabled>
+                                                    </div>
+                                                    }
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @if (a.Branch != null)
+                                                    {
+
+                                                        <div class="form-group" data-validate="Phone Number is required">
+                                                            <label class="bmd-label-floating">Phone Number</label>
+                                                            <input type="text" class="form-control" name="type" value="@a.Branch.PhoneNumber" disabled>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group" data-validate="Adress is required">
-                                                    <label class="bmd-label-floating">Adress</label>
-                                                    <input type="text" class="form-control" name="address" value="@a.Branch.Address" disabled>
+                            </div>
+                        }
+                        @if (a.Staff != null)
+                        {
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header card-header-info">
+                                        <h4 class="card-title">Staff</h4>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group" data-validate="First Name is required">
+                                                        <label class="bmd-label-floating">First Name</label>
+                                                        <input type="text" class="form-control" name="firstName" value="@a.Staff.FirstName" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group" data-validate="Last Name is required">
+                                                        <label class="bmd-label-floating">Last Name</label>
+                                                        <input type="text" class="form-control" name="lastName" value="@a.Staff.LastName" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group" data-validate="Gender is required">
+                                                        <label class="bmd-label-floating">Gender</label>
+                                                        <input type="text" class="form-control" name="gender" value="@a.Staff.Gender" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group" data-validate="Email is required">
+                                                        <label class="bmd-label-floating">Email</label>
+                                                        <input type="text" class="form-control" name="email" value="@a.Staff.Email" disabled>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Phone Number is required">
-                                                    <label class="bmd-label-floating">Phone Number</label>
-                                                    <input type="text" class="form-control" name="type" value="@a.Branch.PhoneNumber" disabled>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group" data-validate="Address is required">
+                                                        <label class="bmd-label-floating">Address</label>
+                                                        <input type="text" class="form-control" name="address" value="@a.Staff.Address" disabled>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </form>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        }
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header card-header-info">
+                                        <h4 class="card-title">Company</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group" data-validate="Name is required">
+                                                        <label class="bmd-label-floating">Name</label>
+                                                        <input type="text" class="form-control" name="name" value="@a.Company.Name" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-info">
-                                    <h4 class="card-title">Staff</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group" data-validate="First Name is required">
-                                                    <label class="bmd-label-floating">First Name</label>
-                                                    <input type="text" class="form-control" name="firstName" value="@a.Staff.FirstName" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <div class="form-group" data-validate="Last Name is required">
-                                                    <label class="bmd-label-floating">Last Name</label>
-                                                    <input type="text" class="form-control" name="lastName" value="@a.Staff.LastName" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group" data-validate="Gender is required">
-                                                    <label class="bmd-label-floating">Gender</label>
-                                                    <input type="text" class="form-control" name="gender" value="@a.Staff.Gender" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group" data-validate="Email is required">
-                                                    <label class="bmd-label-floating">Email</label>
-                                                    <input type="text" class="form-control" name="email" value="@a.Staff.Email" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group" data-validate="Address is required">
-                                                    <label class="bmd-label-floating">Address</label>
-                                                    <input type="text" class="form-control" name="address" value="@a.Staff.Address" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-info">
-                                    <h4 class="card-title">Company</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group" data-validate="Name is required">
-                                                    <label class="bmd-label-floating">Name</label>
-                                                    <input type="text" class="form-control" name="name" value="@a.Company.Name" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

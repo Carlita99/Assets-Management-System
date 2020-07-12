@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetManagement.Data;
 using AssetManagement.Models;
+using AssetManagement.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,21 +20,23 @@ namespace AssetManagement.Controllers
         private readonly UserManager<Company> _userManager;
         private readonly SignInManager<Company> _signInManager;
         private readonly Context _context;
-        public AssetController(UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
+        private readonly IAssetService _assetService;
+        public AssetController(IAssetService assetService, UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _assetService = assetService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name)
         {
             Company company = await _userManager.GetUserAsync(HttpContext.User);
             int id = int.Parse(await _userManager.GetUserIdAsync(company));
-            company = await _context.Users
-                .Include(c => c.Assets).ThenInclude(a => a.Type)
-                .Include(c => c.Assets).ThenInclude(a => a.Staff)
-                .Include(c => c.Assets).ThenInclude(a => a.Branch)
-                .SingleOrDefaultAsync(c => c.Id == id);
+            if (string.IsNullOrEmpty(name))
+                company = await _assetService.GetPopulatedCompany(id);
+            else
+                company = await _assetService.GetCompanyAndStaffModel(id,name);
+
             ViewData["company"] = company;
             return View();
         }
@@ -41,12 +44,7 @@ namespace AssetManagement.Controllers
         public async Task<IActionResult> Asset(int id)
         {
 
-            Asset asset = await _context.Assets
-                        .Include(a => a.Type)
-                        .Include(a => a.Branch).ThenInclude(b => b.Company)
-                        .Include(a => a.Staff)
-                        .Include(a => a.Company)
-                        .FirstOrDefaultAsync(asset => asset.Id == id);
+            Asset asset = await _assetService.GetPopulatedAsset(id);
             if (asset == null)
             {
                 ViewData["Error"] = "Asset not found";
@@ -80,24 +78,7 @@ namespace AssetManagement.Controllers
                 return View();
             }
 
-            AssetType assetType = await _context.AssetTypes.FirstOrDefaultAsync(t => t.Id == type);
-            Branch companyBranch = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branch);
-            Staff responsible = await _context.Staff.FirstOrDefaultAsync(s => s.Branch.Company.Id == companyId);
-
-            Asset asset = new Asset()
-            {
-                Rented = rented,
-                Model = model,
-                AquiredDate = aquired,
-                Description = description,
-                Price = price,
-                Branch = companyBranch,
-                Staff = responsible,
-                Type = assetType,
-                Company = company
-            };
-            await _context.Assets.AddAsync(asset);
-            var changed = await _context.SaveChangesAsync();
+            var changed = await _assetService.AddAsset(rented, model, aquired, description, price, type, staff, branch, company);
             if (changed > 0)
             {
                 return RedirectToAction("Index");
@@ -111,12 +92,7 @@ namespace AssetManagement.Controllers
         {
             Company company = await _userManager.GetUserAsync(HttpContext.User);
             int companyId = int.Parse(await _userManager.GetUserIdAsync(company));
-            Asset asset = await _context.Assets
-                .Include(a => a.Company)
-                .Include(a => a.Staff)
-                .Include(a => a.Branch)
-                .Include(a => a.Type)
-                .FirstOrDefaultAsync(a => a.Id == Id);
+            Asset asset = await _assetService.GetPopulatedAsset(Id);
             if (asset == null)
             {
                 ViewData["Error"] = "Asset doesn't exist.";
@@ -137,20 +113,7 @@ namespace AssetManagement.Controllers
                 return View();
             }
 
-            AssetType assetType = await _context.AssetTypes.FirstOrDefaultAsync(t => t.Id == type);
-            Branch companyBranch = await _context.Branches.FirstOrDefaultAsync(b => b.Id == branch);
-            Staff responsible = await _context.Staff.FirstOrDefaultAsync(s => s.Branch.Company.Id == companyId);
-
-            asset.Rented = rented;
-            asset.Model = model;
-            asset.AquiredDate = aquired;
-            asset.Description = description;
-            asset.Price = price;
-            asset.Type = assetType;
-            asset.Branch = companyBranch;
-            asset.Staff = responsible;
-
-            var changed = await _context.SaveChangesAsync();
+            var changed = await _assetService.EditAsset(asset, rented, model, aquired, description, price, type, staff, branch, company);
             if (changed > 0)
             {
                 return RedirectToAction("Index");
@@ -164,12 +127,7 @@ namespace AssetManagement.Controllers
         {
             Company company = await _userManager.GetUserAsync(HttpContext.User);
             int companyId = int.Parse(await _userManager.GetUserIdAsync(company));
-            Asset asset = await _context.Assets
-                .Include(a => a.Company)
-                .Include(a => a.Staff)
-                .Include(a => a.Branch)
-                .Include(a => a.Type)
-                .FirstOrDefaultAsync(a => a.Id == Id);
+            Asset asset = await _assetService.GetPopulatedAsset(Id);
             if (asset == null)
             {
                 ViewData["Error"] = "Asset doesn't exist.";
@@ -180,8 +138,7 @@ namespace AssetManagement.Controllers
                 ViewData["Error"] = "You don't have access to edit this item.";
                 return View();
             }
-            asset.DisposedDate = DateTime.Now;
-            var changed = await _context.SaveChangesAsync();
+            var changed = await _assetService.DisposeAsset(asset);
             if (changed > 0)
             {
                 ViewData["Error"] = "Oops, an error occured. Please Try Again.";

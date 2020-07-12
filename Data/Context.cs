@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
-using Contract = AssetManagement.Models.Contract;
 
 namespace AssetManagement.Data
 {
@@ -20,8 +19,7 @@ namespace AssetManagement.Data
         public DbSet<Branch> Branches { get; set; }
         //DbSet<Company> Companies { get; set; }
         public DbSet<CompanyType> CompanyTypes { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
-        public DbSet<ContractType> ContractTypes { get; set; }
+        
         public DbSet<Staff> Staff { get; set; }
 
 
