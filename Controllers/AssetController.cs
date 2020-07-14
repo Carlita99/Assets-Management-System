@@ -21,21 +21,28 @@ namespace AssetManagement.Controllers
         private readonly SignInManager<Company> _signInManager;
         private readonly Context _context;
         private readonly IAssetService _assetService;
-        public AssetController(IAssetService assetService, UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
+        private readonly IStaffService _staffService;
+        public AssetController(IStaffService staffService ,IAssetService assetService, UserManager<Company> userManager, SignInManager<Company> signInManager, Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _assetService = assetService;
+            _staffService = staffService;
         }
         public async Task<IActionResult> Index(string name)
         {
             Company company = await _userManager.GetUserAsync(HttpContext.User);
+            ICollection<Staff> staff;
             int id = int.Parse(await _userManager.GetUserIdAsync(company));
             if (string.IsNullOrEmpty(name))
                 company = await _assetService.GetPopulatedCompany(id);
             else
-                company = await _assetService.GetCompanyAndStaffModel(id,name);
+            { company = await _assetService.GetCompanyAndStaffModel(id, name);
+                staff = await _staffService.GetStaffByName(company.Id, name);
+                ViewData["staff"] = staff;
+
+            }
 
             ViewData["company"] = company;
             return View();

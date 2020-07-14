@@ -11,5 +11,7 @@ namespace AssetManagement.Services
         public Task<int> AddStaff(string firstName, string lastName, string gender, string email, string address, Branch branch);
         public Task<Staff> GetStaffById(int id,Company company);
         public Task<int> EditStaff(string firstName, string lastName, string gender, string email, string address,Branch branch, Staff staff);
+        public Task<ICollection<Staff>> GetStaffByName(int company,string name);
+
     }
 }

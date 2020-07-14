@@ -30,11 +30,15 @@ namespace AssetManagement.Services
             return result;
         }
 
-        public async Task<Staff> GetStaffById(int id,Company company)
+        public async Task<Staff> GetStaffById(int id, Company company)
         {
-           return await _context.Staff.FirstOrDefaultAsync((s) => s.Id == id && s.Branch.Company.Id == company.Id);
+            return await _context.Staff.FirstOrDefaultAsync((s) => s.Id == id && s.Branch.Company.Id == company.Id);
         }
 
+        public async Task <ICollection<Staff>> GetStaffByName(int company, string name)
+        {
+            return await _context.Staff.Where(s => s.FirstName.ToLower().Contains(name.ToLower()) || s.LastName.ToLower().Contains(name.ToLower())).ToListAsync();
+        }
         public async Task<int> EditStaff(string firstName, string lastName, string gender, string email, string address, Branch branch,Staff staff)
         {
             staff.Branch = branch;

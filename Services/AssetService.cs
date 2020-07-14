@@ -86,10 +86,11 @@ namespace AssetManagement.Services
 
         public async Task<Company> GetCompanyAndStaffModel(int id, string model)
         {
+            //search assets in this company
             return await _context.Users
-              .IncludeFilter(c => c.Assets.Where(a => a.Model == model).Select(a=>a.Staff))
-              .IncludeFilter(c => c.Assets.Where(a => a.Model == model).Select(a => a.Branch))
-              .IncludeFilter(c => c.Assets.Where(a => a.Model == model).Select(a => a.Type))
+              .IncludeFilter(c => c.Assets.Where(a => a.Model.ToLower().Contains(model.ToLower())).Select(a=>a.Staff))
+              .IncludeFilter(c => c.Assets.Where(a => a.Model.ToLower().Contains(model.ToLower())).Select(a => a.Branch))
+              .IncludeFilter(c => c.Assets.Where(a => a.Model.ToLower().Contains(model.ToLower())).Select(a => a.Type))
               .SingleOrDefaultAsync(c => c.Id == id);
 
         }
